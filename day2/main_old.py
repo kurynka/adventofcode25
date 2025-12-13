@@ -22,9 +22,9 @@ def loop_and_subtract(sides, sequence_tocheck):
     # sequence_tocheck = int(len(sides[0])/2)
     # part 2 were addint all integer dividers of our number length
     for j in range (1, sequence_tocheck):
-        if sequence_tocheck % j == 0 and sequence_tocheck != j :
+        if sequence_tocheck % j == 0:
             list_to_turn_into_set = []
-            print("checkable chunk len", j, sequence_tocheck)
+            # print(j, sequence_tocheck)
             for i in range (int(sides[0]), int(sides[1]), 1):
                 list_to_turn_into_set.append(textwrap3.wrap(str(i),j))
                 # print(textwrap3.wrap(str(i),j))
@@ -32,30 +32,32 @@ def loop_and_subtract(sides, sequence_tocheck):
                 set_to_check = set(list_to_turn_into_set[0])
                 # print(len(set_to_check))
 
-                if len(set_to_check) == 1 and len(str(i))!= 1 and not i in invalid_ids: 
+                if len(set_to_check) == 1: 
                     invalid_ids.append(i)
-                    print(sides[0], '-', sides[1], list_to_turn_into_set, set_to_check)
+                    print(sides[0], '-', sides[1], list_to_turn_into_set,set_to_check)
                 list_to_turn_into_set = []
 
 
 for i in input:
-    sides = str(i).split('-')
-    if len(sides[0]) % 2 != 0 and len(sides[1]) % 2 != 0: # if both odd
-        print(sides)
-        loop_and_subtract(sides, len(sides[1]))
+    sides = str(i).split('-') 
+    if len(sides[0]) % 2 != 0 and len(sides[1]) % 2 != 0: # if both odd we continue
+        loop_and_subtract(sides, 1)
     # print(len(sides[0])-len(sides[1]))
+    # now we do the checking
+    # to check for patterns we need to get greatest divisors the string lengths
     elif len(sides[0]) % 2 == 0 and len(sides[1]) % 2 == 0: # both even
-        print(sides)
         loop_and_subtract(sides, int(len(sides[0])))
     else: # one even one odd - we need the even one
         if len(sides[0]) % 2 == 0 and len(sides[1]) % 2 != 0:  # len od the left side is always less or than right here
-            print(sides)
             loop_and_subtract(sides, int(len(sides[0])))
         elif len(sides[0]) % 2 != 0 and len(sides[1]) % 2 == 0:
-            print(sides)
             loop_and_subtract(sides, int(len(sides[1])))
+
+print(sum(invalid_ids))
+
+
+    # else
+# print(invalid_ids)
     
-set_ids = set(invalid_ids)
-print(set_ids)
-print(invalid_ids)
-print(sum(set_ids))
+    # when we have the ways how to divide the numbers, we loop through, get positions 
+    # 123123, 3x3, 123 - 123 = 0, but 2x2x2 12 - 31 - 23 != 0
