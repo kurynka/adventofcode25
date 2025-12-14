@@ -1,42 +1,34 @@
-
 lines = open('/Users/kalinka/adventofcode25/day3/input.txt').read().splitlines()
 
 
-print(len(lines))
+# print(len(lines))
 # joltage detector, need to detect biggest digit, store the position
-# then detect the second biggest with index bigger than the first biggest
+# then detect the second biggest with index bigger than the first biggest, 12 positions
 # arrange them into a number 
 # sum jotlages from each bank (line)
 
-# pos_to_ignore = 0
-total_joltage = 0
+total_joltage = []
+
 
 for line in lines:
+    print(line)
+    battery = []
     # print(len(line))
-    highest_pos = 0
-    second_highest_pos = 0
-    joltage = ''
-    highest_number = 0
-    second_highest_number = 0
-    for i in range (0, len(line)-1, 1):
-        # print('checking', line[i])
-        if int(line[i]) > highest_number:
-            if int(line[i]) == 99: print('last digit')
-            highest_number = int(line[i])
-            highest_pos = i
-            # print('assigned', i)
-    for j in range(highest_pos + 1, len(line), 1):
-        if int(line[j]) > second_highest_number:
-            # if highest_pos == 99: print('checking from range ', highest_pos +1)
-            second_highest_number = int(line[j])
-            # print(second_highest_number)
-            second_highest_pos = j
-    joltage = line[highest_pos] + line[second_highest_pos]
-    num_joltage = int(joltage)
-    # print(line)
-    # print(num_joltage)
-    total_joltage += num_joltage
 
-print(total_joltage)
+    previous_digit = 0
+    position_to_start = 0
+    for i in range (0, 12): # going in 12 times and looking for highest joltage
+        highest_num = 0
+        for j in range (position_to_start, len(line)-11+i): # going in the rest of digits
+            # print('pos to start from ', position_to_start)
+            if int(line[j]) > highest_num:
+                highest_num = int(line[j])
+                # print('found highest num- ', highest_num, 'pos- ', j)
+                position_to_start = j + 1 
+        battery.append(highest_num)
+    total_joltage.append(int(str(battery).replace('[','').replace(', ', '').replace(']', '')))
+
+print(sum(total_joltage))
+
 
         
